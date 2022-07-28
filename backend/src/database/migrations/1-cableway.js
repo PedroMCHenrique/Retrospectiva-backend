@@ -26,6 +26,10 @@ module.exports = {
         field: 'departure_time',
         type: Sequelize.DATE,
       },
+      price: {
+        allowNull: false,
+        type: Sequelize.DECIMAL(10, 2),
+      },
       image: {
         allowNull: false,
         type: Sequelize.STRING,
