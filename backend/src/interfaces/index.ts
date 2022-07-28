@@ -1,5 +1,5 @@
 export interface IUser {
-  id: number;
+  id?: number;
   email: string;
   password: string;
   name: string;
@@ -13,7 +13,7 @@ export interface ICableway {
   image: string;
 }
 
-export interface ILoginService {
+export interface IUserService {
   login({ email, password }: Partial<Pick<IUser, 'email' | 'password'>>): Promise<Omit<IUser, 'password'>>
 };
 
