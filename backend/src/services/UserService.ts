@@ -1,10 +1,11 @@
-import { IUserService, ILoginValidator, IUser } from "../interfaces";
+import { IUserService, ILoginValidator, IUser, IUserValidator } from "../interfaces";
 import UserModel from '../database/models/UserModel';
 import HandleError from "../helpers/HandleError";
 
 class UserService implements IUserService {
-  constructor(private loginValidator: ILoginValidator) {
+  constructor(private loginValidator: ILoginValidator, private userValidator: IUserValidator) {
     this.loginValidator = loginValidator;
+    this.userValidator = userValidator;
   }
 
   async login({ email, password }: Pick<IUser, 'email' | 'password'>): Promise<Omit<IUser, "password">> {
@@ -17,6 +18,15 @@ class UserService implements IUserService {
     }
     
     return user;
+  }
+  async register({ name, email, password }: Omit<IUser, 'id'>): Promise<Omit<IUser, "password" | any>> {
+    this.userValidator.valid({ name, email, password});
+    const findUser = await UserModel.findOne({ where: { email } });
+    if(findUser) {
+      throw HandleError.badRequest('"email" already used');
+    }
+    const newUser = await UserModel.create({ name, email, password });
+    return newUser;
   }
 }
 
