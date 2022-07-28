@@ -26,7 +26,6 @@ Cableway.init(
     },
     price: {
       allowNull: false,
-      unique: true,
       type: DataTypes.DECIMAL(10, 2),
     },
     seats: {
