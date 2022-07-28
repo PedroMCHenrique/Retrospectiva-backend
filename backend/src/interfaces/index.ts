@@ -5,6 +5,14 @@ export interface IUser {
   name: string;
 }
 
+export interface ICableway {
+  id: number;
+  price: number;
+  seats: number;
+  departureTime: string;
+  image: string;
+}
+
 export interface ILoginService {
   login({ email, password }: Partial<Pick<IUser, 'email' | 'password'>>): Promise<Omit<IUser, 'password'>>
 };
