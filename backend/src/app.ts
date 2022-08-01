@@ -17,8 +17,9 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   if (err.status) {
     return res.status(err.status).json({ error: err.message })
   }
-
-  return res.status(500).json({ error: 'internal server error'})
+  console.log(err.message);
+  
+  return res.status(500).json({ error: err.message})
 })
 
 export default app;

@@ -5,7 +5,7 @@ module.exports = {
    * @param {import('sequelize').DataTypes} Sequelize 
    */
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('cableways', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,19 +14,29 @@ module.exports = {
       },
       name: {
         allowNull: false,
+        unique: true,
         type: Sequelize.STRING,
       },
-      email: {
+      seats: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      departureTime: {
+        allowNull: false,
+        field: 'departure_time',
+        type: Sequelize.DATE,
+      },
+      price: {
+        allowNull: false,
+        type: Sequelize.DECIMAL(10, 2),
+      },
+      image: {
         allowNull: false,
         type: Sequelize.STRING,
-      },
-      password: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
+      }
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('cableways');
   },
 };

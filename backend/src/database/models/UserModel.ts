@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
 import { IUser } from '../../interfaces';
+import Cableway from './CablewayModel';
 
 class User extends Model implements IUser {
   public id!: number;
