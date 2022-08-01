@@ -4,8 +4,8 @@ import { ITokenGenerator, IUser } from '../interfaces';
 const JWT_SECRET = process.env.JWT_SECRET || 'secret_key';
 
 class TokenGenerator implements ITokenGenerator{
-  generate({ name, email }: Pick<IUser, 'name' | 'email'>): string {
-    const token = jwt.sign({ name, email }, JWT_SECRET)
+  generate({ id, name, email }: Pick<IUser, 'id' | 'name' | 'email'>): string {
+    const token = jwt.sign({ id, name, email }, JWT_SECRET)
 
     return token;
   }
