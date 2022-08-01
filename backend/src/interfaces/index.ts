@@ -13,8 +13,9 @@ export interface ICableway {
   image: string;
 }
 
-export interface ILoginService {
-  login({ email, password }: Partial<Pick<IUser, 'email' | 'password'>>): Promise<Omit<IUser, 'password'>>
+export interface IUserService {
+  login({ email, password }: Partial<Pick<IUser, 'email' | 'password'>>): Promise<Omit<IUser, 'password'>>;
+  register({ name, email, password }: Partial<Omit<IUser, 'id'>>): Promise<Omit<IUser, 'password'>>;
 };
 
 export interface ITokenGenerator {
@@ -27,4 +28,8 @@ export interface ILoginModel {
 
 export interface ILoginValidator {
   valid({ email, password }: Partial<Pick<IUser, 'email' | 'password'>>): void;
+}
+
+export interface IUserValidator {
+  valid({ email, password }: Omit<IUser, 'id'>): void;
 }
