@@ -16,26 +16,22 @@ services:
       timeout: 10s
       retries: 5
   backend:
+    container_name: app_backend
     build: ./backend
-    ports:
-      - 3000:3000
-    working_dir: /app-backend
+    working_dir: /backend
+    volumes: 
+      - ./backend/src:/backend/src
     depends_on:
       db:
         condition: service_healthy
     environment:
       - APP_PORT=3000
-      - JWT_SECRET=jwt_secret
-      # Os dados abaixo se referem ao container `db`
-      # Dica: Relembre aqui da comunicação interna entre containers
       - DB_USER=root
       - DB_PASS=123456
       - DB_HOST=db
       - DB_PORT=3306
-    healthcheck:
-      test: ['CMD', 'lsof', '-t', '-i:3000'] # Caso utilize outra porta interna para o back, altere ela aqui também
-      timeout: 10s
-      retries: 5
+    ports:
+      - 3000:3000
   db:
     image: mysql:8.0.21
     container_name: db
