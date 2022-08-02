@@ -5,10 +5,10 @@ module.exports = {
    * @param {import('sequelize').DataTypes} Sequelize 
    */
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('cablewayUsers', {
-      cabblewayId: {
+    await queryInterface.createTable('cableway_users', {
+      cablewayId: {
         allowNull: false,
-        field: 'cabbleway_id',
+        field: 'cableway_id',
         primaryKey: true,
         type: Sequelize.INTEGER,
         references: { model: 'cableways', key: 'id' },
@@ -21,6 +21,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
         references: { model: 'users', key: 'id' },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
+      quantity: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },

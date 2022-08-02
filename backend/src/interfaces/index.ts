@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 export interface IUser {
   id: number;
   email: string;
@@ -13,10 +15,34 @@ export interface ICableway {
   image: string;
 }
 
+export type BuyTicket = {
+  cablewayId: number;
+  userId: number;
+  quantity: number;
+}
+
+export type TokenPayload = {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export interface RequestUser extends Request {
+  user?: TokenPayload;
+}
+
 export interface IUserService {
   login({ email, password }: Partial<Pick<IUser, 'email' | 'password'>>): Promise<Omit<IUser, 'password'>>;
   register({ name, email, password }: Partial<Omit<IUser, 'id'>>): Promise<Omit<IUser, 'password'>>;
 };
+
+export type TicketMessage = {
+  message: string;
+}
+
+export interface ITicketService {
+  buy(ticketInfo: BuyTicket): Promise<TicketMessage>;
+}
 
 export interface ITokenGenerator {
   generate({ name, email }: Pick<IUser, 'name' | 'email'>): string;

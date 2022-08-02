@@ -10,7 +10,8 @@ class HandleError {
     return ({
       message,
       status: 404,
-    })
+    });
+
   }
 }
 
