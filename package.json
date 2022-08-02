@@ -4,9 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "docker-compose up -d",
+    "prestart": "npm run compose:up",
     "start": "echo \" containers are up \"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compose:up": "(docker-compose up -d --build)",
+    "compose:down": "(docker-compose down --remove-orphans)",
+    "compose:up:dev": "(docker-compose -f docker-compose.dev.yml up -d --build)",
+    "compose:down:dev": "(docker-compose -f docker-compose.dev.yml down --remove-orphans)",
+    "logs": "docker-compose logs -f"
   },
   "repository": {
     "type": "git",
