@@ -40,6 +40,8 @@ router.get('/cableway/:id', async (req, res, next) => {
 })
 
 router.get('/cableway', async (req, res,) => {
+  console.log('sim');
+  
   return cablewayController.getAll(req, res);
 })
 
