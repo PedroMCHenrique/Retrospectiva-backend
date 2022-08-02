@@ -3,17 +3,20 @@ services:
   backend:
     build: ./backend
     container_name: backend
+    working_dir: /backend
+    volumes: 
+      - ./backend/src:/backend/src
     depends_on:
       db:
         condition: service_healthy
     environment:
-      - PORT=80
+      - APP_PORT=3000
       - DB_USER=root
       - DB_PASS=123456
       - DB_HOST=db
       - DB_PORT=3306
     ports:
-      - 3000:80
+      - 3000:3000
   frontend:
     build: ./frontend
     container_name: frontend
@@ -28,12 +31,11 @@ services:
     platform: linux/x86_64
     container_name: db
     ports:
-      - 3306:3306
+      - 3002:3306
     environment:
       - MYSQL_ROOT_PASSWORD=123456
     restart: 'always'
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost'] # Deve aguardar o banco ficar operacional
-      interval: 5s
       timeout: 10s
       retries: 10

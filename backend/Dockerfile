@@ -1,6 +1,6 @@
 FROM node:16-alpine
 
-WORKDIR /app
+WORKDIR /backend
 
 COPY package*.json .
 
@@ -11,3 +11,5 @@ COPY . .
 ENTRYPOINT [ "npm" ]
 
 CMD ["start"]
+
+EXPOSE 3000
