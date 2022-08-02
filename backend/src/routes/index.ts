@@ -13,8 +13,6 @@ import Jwt from '../middlewares/jwt';
 const loginValidator = new LoginValidator();
 const userValidator = new UserValidator();
 const tokenGenerator = new TokenGenerator();
-const loginService = new LoginService(loginValidator);
-const loginController = new LoginController(loginService, tokenGenerator);
 const cablewayService = new CablewayService();
 const cablewayController = new CablewayController(cablewayService);
 const userService = new UserService(loginValidator, userValidator);
