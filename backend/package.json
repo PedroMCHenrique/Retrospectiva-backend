@@ -31,6 +31,7 @@
     "nodemon": "^2.0.19",
     "sequelize-cli": "^6.4.1",
     "sinon": "^14.0.0",
+    "superagent": "^8.0.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4"
@@ -42,7 +43,6 @@
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.21.3",
-    "superagent": "^8.0.0"
+    "sequelize": "^6.21.3"
   }
 }
