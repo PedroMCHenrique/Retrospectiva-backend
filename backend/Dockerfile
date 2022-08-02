@@ -1,13 +1,11 @@
-FROM node:16-alpine
+FROM node:16.14-alpine
 
-WORKDIR /app
+WORKDIR /app-backend
 
 COPY package*.json .
 
-RUN npm ci
+RUN npm install
 
 COPY . .
 
-ENTRYPOINT [ "npm" ]
-
-CMD ["start"]
+CMD ["npm", "start"]
