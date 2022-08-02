@@ -1,0 +1,11 @@
+.price {
+    position: absolute;
+    background: #1c2d3ade;
+    top: 0;
+    right: 0;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 4px;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+}

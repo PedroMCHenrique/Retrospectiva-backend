@@ -14,8 +14,18 @@ services:
       - DB_PORT=3306
     ports:
       - 3000:80
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    working_dir: /frontend
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 3001:3001
   db:
     image: mysql:8.0.21
+    platform: linux/x86_64
     container_name: db
     ports:
       - 3306:3306
@@ -23,7 +33,7 @@ services:
       - MYSQL_ROOT_PASSWORD=123456
     restart: 'always'
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"] # Deve aguardar o banco ficar operacional
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost'] # Deve aguardar o banco ficar operacional
       interval: 5s
       timeout: 10s
       retries: 10

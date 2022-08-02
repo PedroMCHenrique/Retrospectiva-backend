@@ -5,11 +5,13 @@ class HandleError {
       status: 400,
     })
   }
+
   notFound(message: string) {
     return ({
       message,
       status: 404,
     });
+
   }
 }
 
