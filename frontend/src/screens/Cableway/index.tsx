@@ -1,10 +1,9 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Header } from '../../components/Header';
-import paoAcucar from '../../assets/pao-de-acucar.webp';
 import styles from './styles.module.css';
 import { CablewayList } from '../../components/CablewaysList';
 import { api } from '../../services/api';
-import { InputHTMLAttributes, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
 interface ICableway {
@@ -22,7 +21,6 @@ export function Cableway() {
   const navigate = useNavigate();
   const [cableway, setCableway] = useState<ICableway>({} as ICableway);
   const [quantity, setQuantity] = useState(1);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     async function getCableways() {
@@ -117,7 +115,6 @@ export function Cableway() {
                     type="number"
                     disabled
                     value={quantity}
-                    ref={inputRef}
                   />
                   <button
                     onClick={() => handleChangeQuantity('increase')}
