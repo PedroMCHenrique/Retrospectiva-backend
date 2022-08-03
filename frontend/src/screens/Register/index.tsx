@@ -9,8 +9,6 @@ import bondinho from '../../assets/bondinho.jpg';
 import { CustomInput } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { api } from '../../services/api';
-import { toast } from 'react-toastify';
 
 interface RegisterFormData {
   name: string;
@@ -38,17 +36,7 @@ export function Register() {
   });
 
   const onSubmit = async (dataForm: RegisterFormData) => {
-    try {
-      const { status } = await api.post('/register', dataForm);
-      if (status === 201) {
-        toast.success('Usuário criado com sucesso');
-        navigate('/');
-      }
-    } catch (error: any) {
-      console.log(error);
-
-      toast.warning(error.response.data.error);
-    }
+    console.log(dataForm);
   };
 
   function showPassword() {

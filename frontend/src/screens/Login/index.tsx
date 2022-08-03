@@ -36,7 +36,7 @@ export function Login() {
   });
 
   const onSubmit = async (dataForm: LoginFormData) => {
-    signIn(dataForm);
+    console.log(dataForm);
   };
 
   function showPassword() {

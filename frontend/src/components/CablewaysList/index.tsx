@@ -1,15 +1,14 @@
 import { Cableway } from './Cableway';
 import bondinho from '../../assets/bondinho.jpg';
 import paoAcucar from '../../assets/pao-de-acucar.webp';
-import { useEffect, useState } from 'react';
-import { api } from '../../services/api';
+import { useState } from 'react';
 
-const cableways = [
+const cableways: ICableway[] = [
   {
     id: 1,
     name: 'bondinho',
     image: bondinho,
-    price: 12,
+    price: '12',
     seats: 12,
     departureTime: '03/08/2022 14h',
   },
@@ -17,7 +16,7 @@ const cableways = [
     id: 2,
     name: 'Pão de Açúcar',
     image: paoAcucar,
-    price: 120,
+    price: '120',
     seats: 12,
     departureTime: '02/08/2022 14h',
   },
@@ -34,35 +33,8 @@ interface ICableway {
   departureTime: string;
 }
 export function CablewayList({ title }: CablewayListProps) {
-  const [cableways, setCableways] = useState<ICableway[]>(
-    [] as Array<ICableway>
-  );
   const [search, setSearch] = useState('');
-  const [filtered, setFiltered] = useState<ICableway[]>([] as Array<ICableway>);
-
-  useEffect(() => {
-    async function getCableways() {
-      const { data } = await api.get<ICableway[]>('/cableway');
-      const cablewaysFormatted = data.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: `R$ ${item.price}`,
-        seats: item.seats,
-        image: item.image,
-        departureTime: new Date(item.departureTime).toLocaleString('pt-BR', {
-          day: '2-digit',
-          month: 'numeric',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
-      }));
-      setCableways(cablewaysFormatted);
-      setFiltered(cablewaysFormatted);
-    }
-
-    getCableways();
-  }, []);
+  const [filtered, setFiltered] = useState<ICableway[]>(cableways);
 
   function handleSearch(search: string) {
     const filterValue = search.toLowerCase();

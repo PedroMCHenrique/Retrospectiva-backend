@@ -17,7 +17,7 @@ export function Header() {
         <div className="flex items-center gap-4">
           <div className="flex flex-col">
             <p className="text-white">
-              Olá, <span>{name}</span>
+              Olá, <span>{'usuário'}</span>
             </p>
             <div className="flex items-center gap-2 justify-end text-orange-400 cursor-pointer">
               <p onClick={signOut}>sair </p> <FiLogOut />
