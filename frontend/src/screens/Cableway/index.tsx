@@ -128,7 +128,7 @@ export function Cableway() {
                 </div>
                 <p className="flex flex-1 flex-col mt-4 gap-1 ">
                   <span className="text-emerald-700 text-sm">
-                    <b>acentos disponíveis:</b> {cableway.seats}
+                    <b>assentos disponíveis:</b> {cableway.seats}
                   </span>
                   <span className="text-red-400 text-center text-md">
                     <b>R$ {(cableway.price * quantity).toFixed(2)}</b>
