@@ -8,7 +8,9 @@ import logoExpress from '../../assets/logo-expresso17.svg';
 import bondinho from '../../assets/bondinho.jpg';
 import { CustomInput } from '../../components/Input';
 import { Button } from '../../components/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { api } from '../../services/api';
+import { toast } from 'react-toastify';
 
 interface RegisterFormData {
   name: string;
@@ -25,6 +27,7 @@ const registerSchema = object({
 }).required();
 
 export function Register() {
+  const navigate = useNavigate();
   const [isShowingPassword, setIsShowingPassword] = useState(false);
   const {
     register,
@@ -35,7 +38,17 @@ export function Register() {
   });
 
   const onSubmit = async (dataForm: RegisterFormData) => {
-    console.log(dataForm);
+    try {
+      const { status } = await api.post('/register', dataForm);
+      if (status === 201) {
+        toast.success('Usuário criado com sucesso');
+        navigate('/');
+      }
+    } catch (error: any) {
+      console.log(error);
+
+      toast.warning(error.response.data.error);
+    }
   };
 
   function showPassword() {

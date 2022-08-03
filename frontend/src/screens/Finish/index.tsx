@@ -1,5 +1,5 @@
 import { Header } from '../../components/Header';
-import ticket from '../../assets/ticket.svg';
+import ticket from '../../assets/ticket.png';
 import { Link } from 'react-router-dom';
 
 export function Finish() {

@@ -5,6 +5,10 @@ services:
     ports:
       - 3001:3001
     working_dir: /app-frontend
+    volumes:
+      - ./frontend/src:/app-frontend/src
+    environment:
+      - VITE_JWT_SECRET=jwt_secret
     depends_on:
       backend:
         condition: service_healthy

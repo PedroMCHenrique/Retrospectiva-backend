@@ -9,6 +9,7 @@ import logoExpress from '../../assets/logo-expresso17.svg';
 import { CustomInput } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/auth';
 
 interface LoginFormData {
   email: string;
@@ -23,6 +24,8 @@ const loginSchema = object({
 }).required();
 
 export function Login() {
+  const { signIn } = useAuth();
+
   const [isShowingPassword, setIsShowingPassword] = useState(false);
   const {
     register,
@@ -33,7 +36,7 @@ export function Login() {
   });
 
   const onSubmit = async (dataForm: LoginFormData) => {
-    console.log(dataForm);
+    signIn(dataForm);
   };
 
   function showPassword() {
