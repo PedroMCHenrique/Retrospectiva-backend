@@ -1,122 +1,105 @@
 import {
-   createContext,
-   ReactNode,
-   useContext,
-   useEffect,
-   useState,
-} from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { api } from "../services/api";
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import jwt_decode from 'jwt-decode';
+import { api } from '../services/api';
 
 interface User {
-   token: string;
-   name: string;
-   email: string;
-   username: string;
-   avatar?: string;
-   description?: string;
+  token: string;
+  name: string;
 }
 
 interface SignInProps {
-   email: string;
-   password: string;
+  email: string;
+  password: string;
+}
+
+interface Payload {
+  id: number;
+  name: string;
+  email: string;
 }
 
 interface AuthContextData {
-   user: User;
-   signIn: (credential: SignInProps) => Promise<void>;
-   signOut: () => void;
+  user: User;
+  signIn: (credential: SignInProps) => Promise<void>;
+  signOut: () => void;
 }
 
 interface AuthProviderProps {
-   children: ReactNode;
+  children: ReactNode;
 }
 
 const AuthContext = createContext({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
-   const navigate = useNavigate();
-   const [user, setUser] = useState({} as User);
+  const navigate = useNavigate();
+  const [user, setUser] = useState({} as User);
 
-   useEffect(() => {
-      async function getData() {
-         const token = localStorage.getItem("retrospectiva@token");
+  useEffect(() => {
+    const token = localStorage.getItem('retrospectiva@token');
+    if (!token) return signOut();
+    setInformation(token);
+  }, []);
 
-         if (!token) {
-            navigate("/");
-            return;
-         }
-
-         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-         try {
-            const { data } = await api.post("/me");
-            setUser({
-               name: data.user.name,
-               email: data.user.email,
-               username: data.user.username,
-               avatar: data.user.avatar,
-               description: data.user.description,
-               token,
-            });
-
-            navigate("/home");
-         } catch (error) {
-            signOut();
-            return;
-         }
-      }
-
-      getData();
-   }, []);
-
-   async function signIn({ email, password }: SignInProps) {
-      const { data } = await api.post("/login", {
-         email,
-         password,
+  async function signIn({ email, password }: SignInProps) {
+    try {
+      const { data } = await api.post('/login', {
+        email,
+        password,
       });
 
-      if (data.error) {
-         toast.warning(data.message);
-         return;
+      if (!data.error && data.token) {
+        setInformation(data.token);
+      } else {
+        toast.warning('E-mail ou senha incorreto');
       }
+    } catch (error) {
+      toast.warning('E-mail ou senha incorreto');
+    }
+  }
 
-      if (!data.error) {
-         setUser({
-            token: data.token,
-            name: data.user.name,
-            email: data.user.email,
-            username: data.user.username,
-            avatar: data.user.avatar,
-            description: data.user.description,
-         });
+  function setInformation(token: string) {
+    const { name } = jwt_decode(token) as Payload;
 
-         localStorage.setItem("retrospectiva@token", data.token);
-         api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
-         navigate("/home");
-      }
-   }
+    setUser({
+      token: token,
+      name: name,
+    });
 
-   function signOut() {
-      delete api.defaults.headers.common["Authorization"];
+    localStorage.setItem('retrospectiva@token', token);
+    localStorage.setItem('retrospectiva@name', name);
+    api.defaults.headers.common['Authorization'] = `${token}`;
+    navigate('/home');
+  }
 
-      localStorage.removeItem("retrospectiva@token");
+  function signOut() {
+    delete api.defaults.headers.common['Authorization'];
 
-      setUser({} as User);
-      navigate("/");
-   }
+    localStorage.removeItem('retrospectiva@token');
+    localStorage.removeItem('retrospectiva@name');
 
-   return (
-      <AuthContext.Provider value={{ user, signIn, signOut }}>
-         {children}
-      </AuthContext.Provider>
-   );
+    setUser({} as User);
+    navigate('/');
+  }
+
+  return (
+    <AuthContext.Provider value={{ user, signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 function useAuth(): AuthContextData {
-   const context = useContext(AuthContext);
+  const context = useContext(AuthContext);
 
-   return context;
+  return context;
 }
 
 export { AuthProvider, useAuth };

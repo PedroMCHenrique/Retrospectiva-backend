@@ -1,13 +1,12 @@
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router-dom';
-
 interface ICableway {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  seats: number;
-  departure: string;
+    id: number;
+    name: string;
+    price: string;
+    seats: number;
+    image: string;
+    departureTime: string;
 }
 
 interface CablewayProps {
@@ -16,7 +15,7 @@ interface CablewayProps {
 
 export function Cableway({ cableway }: CablewayProps) {
   const navigate = useNavigate();
-  const { id, name, image, price, seats, departure } = cableway;
+  const { id, name, image, price, seats, departureTime } = cableway;
 
   function handleNavigate(id: number) {
     navigate(`/cableway/${id}`);
@@ -31,7 +30,7 @@ export function Cableway({ cableway }: CablewayProps) {
         </p>
       </div>
       <div className="px-8 py-2">
-        <p className="text-green-900 font-bold text-3xl mb-4">{name}</p>
+        <p className="text-green-900 font-bold text-3xl mb-4 min-h-[72px]">{name}</p>
         <div className=" text-green">
           <p className="flex items-center justify-between gap-1">
             Lugares:
@@ -39,7 +38,7 @@ export function Cableway({ cableway }: CablewayProps) {
           </p>
           <p className="flex items-center justify-between gap-1 ">
             Partida:
-            <b>{departure}</b>
+            <b>{departureTime}</b>
           </p>
         </div>
       </div>

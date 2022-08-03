@@ -6,6 +6,8 @@ import { Avatar } from '../Avatar';
 
 export function Header() {
   const { signOut } = useAuth();
+  const name = localStorage.getItem('retrospectiva@name');
+
   return (
     <div className="w-full bg-green-900">
       <div className="flex items-center justify-between max-w-screen-2xl mx-auto px-16 py-8">
@@ -15,7 +17,7 @@ export function Header() {
         <div className="flex items-center gap-4">
           <div className="flex flex-col">
             <p className="text-white">
-              Olá, <span>user name</span>
+              Olá, <span>{name}</span>
             </p>
             <div className="flex items-center gap-2 justify-end text-orange-400 cursor-pointer">
               <p onClick={signOut}>sair </p> <FiLogOut />
