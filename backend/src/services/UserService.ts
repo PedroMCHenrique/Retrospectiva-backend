@@ -14,7 +14,7 @@ class UserService implements IUserService {
     const user = await UserModel.findOne({ where: { email, password }, attributes: { exclude: ['password'] } });
 
     if (!user) {
-      throw HandleError.badRequest('incorrect "email" or "password"');
+      throw HandleError.unauthorized('incorrect "email" or "password"');
     }
     
     return user;

@@ -6,6 +6,14 @@ class HandleError {
     })
   }
 
+  unauthorized(message: string) {
+    return ({
+      message,
+      status: 401,
+    });
+
+  }
+  
   notFound(message: string) {
     return ({
       message,
