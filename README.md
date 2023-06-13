@@ -10,7 +10,6 @@ Nós do time de instrução da turma desenvolvemos em conjunto uma aplicação q
 - Express
 - Typescript
 - Programação orientada a objetos
-- Autenticaç
 - Arquitetura de camadas
 - JWT (Json web token)
 - Sequelize
